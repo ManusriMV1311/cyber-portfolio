@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-lab-primary: #0F172A; /* Deep navy */
-  --color-lab-accent: #3B82F6; /* Soft blue */
-  --color-lab-accent-secondary: #22D3EE; /* Light cyan */
-  --color-lab-bg: #F8FAFC; /* Light neutral */
+  --color-lab-primary: #0B0F1A; /* Deep Space Background */
+  --color-lab-accent: #2DD4BF; /* Teal Primary Accent */
+  --color-lab-accent-secondary: #8B5CF6; /* Violet Secondary */
+  --color-lab-highlight: #FF6B6B; /* Coral Highlight */
+  --color-lab-text: #E6EDF3; /* Light Text */
   
   --font-inter: var(--font-inter);
   --font-poppins: var(--font-poppins);
 }
 
 :root {
-  --foreground-rgb: 15, 23, 42;
-  --background-start-rgb: 248, 250, 252;
-  --background-end-rgb: 241, 245, 249;
+  --foreground-rgb: 230, 237, 243;
+  --background-start-rgb: 11, 15, 26;
+  --background-end-rgb: 6, 8, 15;
 }
 
 body {
@@ -31,38 +32,38 @@ body {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.4);
+  background: rgba(45, 212, 191, 0.4); /* Teal scrollbar */
   border-radius: 4px;
 }
 
 .text-soft-glow {
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  text-shadow: 0 0 10px rgba(45, 212, 191, 0.4);
 }
 
 .box-soft-glow {
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2); /* Violet glow */
 }
 
 .box-accent-glow {
-  box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.3); /* Teal glow */
 }
 
 .lab-panel {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(11, 15, 26, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .node-link {
-  stroke: rgba(59, 130, 246, 0.4);
+  stroke: rgba(139, 92, 246, 0.4);
   stroke-width: 2;
   stroke-linecap: round;
 }
 
 .node-link-active {
-  stroke: rgba(34, 211, 238, 0.8);
-  filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.6));
+  stroke: rgba(45, 212, 191, 0.8);
+  filter: drop-shadow(0 0 4px rgba(45, 212, 191, 0.6));
 }

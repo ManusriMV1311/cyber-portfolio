@@ -54,21 +54,21 @@ export default function SystemMap() {
   return (
     <div className="w-full max-w-6xl mx-auto px-6 py-12 flex flex-col items-center">
       <div className="mb-12 text-center max-w-2xl">
-        <div className="inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold mb-4 tracking-wider uppercase">
-          Level 3
+        <div className="inline-block px-3 py-1 rounded-full border border-[#FF6B6B]/30 bg-[#FF6B6B]/5 text-[#FF6B6B] text-xs font-mono font-bold mb-4 tracking-widest uppercase">
+          Lab Access Granted
         </div>
-        <h2 className="text-3xl md:text-4xl font-poppins font-bold text-[#0F172A] mb-4">
+        <h2 className="text-3xl md:text-5xl font-poppins font-bold text-[#E6EDF3] mb-4">
           Project Missions
         </h2>
-        <p className="text-lg text-slate-600 leading-relaxed">
+        <p className="text-lg text-slate-400 font-inter leading-relaxed">
           Explore my conceptual projects and research systems through this dashboard interface.
         </p>
       </div>
 
-      <div className="w-full bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+      <div className="w-full bg-[#0B0F1A] rounded-3xl shadow-[0_0_30px_rgba(45,212,191,0.05)] border border-[#2DD4BF]/20 overflow-hidden flex flex-col md:flex-row min-h-[600px]">
         
         {/* Sidebar / Mission Index */}
-        <div className="w-full md:w-1/3 bg-slate-50 border-r border-slate-200 p-6 flex flex-col gap-3">
+        <div className="w-full md:w-1/3 bg-[#0F172A] border-r border-[#2DD4BF]/20 p-6 flex flex-col gap-3">
           <h3 className="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2 px-2">Active Missions</h3>
           {missions.map((m, idx) => (
             <button
@@ -76,32 +76,32 @@ export default function SystemMap() {
               onClick={() => setActiveMission(idx)}
               className={`flex flex-col text-left p-4 rounded-xl border transition-all duration-300 ${
                 activeMission === idx 
-                  ? "bg-blue-50 border-blue-400 shadow-sm ring-1 ring-blue-400/20" 
-                  : "bg-white border-slate-200 hover:border-blue-300 hover:bg-slate-50"
+                  ? "bg-[#2DD4BF]/10 border-[#2DD4BF] shadow-[0_0_15px_rgba(45,212,191,0.15)]" 
+                  : "bg-[#0B0F1A] border-slate-800 hover:border-[#8B5CF6]/50 hover:bg-[#8B5CF6]/5"
               }`}
             >
               <div className="flex items-center gap-2 mb-1">
-                <FileCode2 size={16} className={activeMission === idx ? "text-blue-500" : "text-slate-400"} />
-                <span className={`font-mono text-xs tracking-wider ${activeMission === idx ? "text-blue-600 font-semibold" : "text-slate-500"}`}>MISSION {m.id}</span>
+                <FileCode2 size={16} className={activeMission === idx ? "text-[#2DD4BF]" : "text-slate-500"} />
+                <span className={`font-mono text-xs tracking-wider ${activeMission === idx ? "text-[#2DD4BF] font-semibold" : "text-slate-500"}`}>MISSION {m.id}</span>
               </div>
-              <span className={`font-poppins font-semibold text-sm leading-tight ${activeMission === idx ? "text-[#0F172A]" : "text-slate-600"}`}>{m.title}</span>
+              <span className={`font-poppins font-semibold text-sm leading-tight ${activeMission === idx ? "text-[#E6EDF3]" : "text-slate-400"}`}>{m.title}</span>
             </button>
           ))}
         </div>
 
         {/* Main Dashboard Panel */}
-        <div className="flex-1 flex flex-col bg-white">
-          <div className="w-full border-b border-slate-100 p-6 bg-white flex items-center justify-between sticky top-0 z-10">
+        <div className="flex-1 flex flex-col bg-[#0B0F1A]">
+          <div className="w-full border-b border-[#2DD4BF]/20 p-6 bg-[#0B0F1A] flex items-center justify-between sticky top-0 z-10">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+              <div className="p-2 bg-[#2DD4BF]/10 rounded-lg text-[#2DD4BF] border border-[#2DD4BF]/30">
                 <Target size={20} />
               </div>
               <div>
-                <h3 className="font-poppins font-bold text-xl text-[#0F172A]">{p.title}</h3>
-                <span className="font-mono text-xs text-blue-600 uppercase tracking-wider">Mission Details</span>
+                <h3 className="font-poppins font-bold text-xl text-[#E6EDF3]">{p.title}</h3>
+                <span className="font-mono text-xs text-[#2DD4BF] uppercase tracking-wider">Mission Details</span>
               </div>
             </div>
-            <span className="text-[10px] uppercase text-green-600 font-bold bg-green-100 px-3 py-1 rounded-full border border-green-200">System Logged</span>
+            <span className="text-[10px] uppercase text-[#2DD4BF] font-bold bg-[#2DD4BF]/10 px-3 py-1 rounded-full border border-[#2DD4BF]/30">System Logged</span>
           </div>
 
           <AnimatePresence mode="wait">
@@ -115,28 +115,28 @@ export default function SystemMap() {
             >
               
               <div className="mb-8">
-                <h4 className="flex items-center gap-2 text-sm font-semibold text-[#0F172A] uppercase tracking-wider mb-2">
-                  <Lightbulb size={16} className="text-blue-500"/> Concept Idea
+                <h4 className="flex items-center gap-2 text-sm font-semibold text-[#8B5CF6] uppercase tracking-wider mb-2">
+                  <Lightbulb size={16} className="text-[#8B5CF6]"/> Concept Idea
                 </h4>
-                <p className="text-slate-600 text-lg leading-relaxed">{p.idea}</p>
+                <p className="text-[#E6EDF3] text-lg leading-relaxed">{p.idea}</p>
               </div>
 
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                 
                 {/* Column 1 */}
                 <div className="space-y-8">
-                  <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider mb-3">
-                      <Target size={14} className="text-red-500"/> Problem
+                  <div className="bg-[#0F172A] rounded-2xl p-6 border border-slate-800">
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#FF6B6B] uppercase tracking-wider mb-3">
+                      <Target size={14} className="text-[#FF6B6B]"/> Problem
                     </h4>
-                    <p className="text-slate-600 text-sm leading-relaxed">{p.problem}</p>
+                    <p className="text-slate-400 text-sm leading-relaxed">{p.problem}</p>
                   </div>
 
-                  <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider mb-4">
-                      <Workflow size={14} className="text-indigo-500"/> System Workflow
+                  <div className="bg-[#0F172A] rounded-2xl p-6 border border-slate-800 shadow-sm">
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#2DD4BF] uppercase tracking-wider mb-4">
+                      <Workflow size={14} className="text-[#2DD4BF]"/> System Workflow
                     </h4>
-                    <div className="p-4 bg-slate-50 rounded-xl font-mono text-xs text-indigo-700 font-medium leading-relaxed border border-indigo-100 flex items-center justify-center text-center">
+                    <div className="p-4 bg-[#0B0F1A] rounded-xl font-mono text-xs text-[#2DD4BF] font-medium leading-relaxed border border-[#2DD4BF]/20 flex items-center justify-center text-center">
                       {p.arch}
                     </div>
                   </div>
@@ -145,31 +145,31 @@ export default function SystemMap() {
                 {/* Column 2 */}
                 <div className="space-y-8">
                   <div>
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider mb-3">
-                      <Cpu size={14} className="text-cyan-500"/> Technologies
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#E6EDF3] uppercase tracking-wider mb-3">
+                      <Cpu size={14} className="text-[#8B5CF6]"/> Technologies
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {p.tech.map(t => (
-                        <span key={t} className="text-xs px-3 py-1.5 rounded-lg bg-cyan-50 text-cyan-700 border border-cyan-100 font-medium">
+                         <span key={t} className="text-xs px-3 py-1.5 rounded-lg bg-[#8B5CF6]/10 text-[#8B5CF6] border border-[#8B5CF6]/30 font-medium">
                           {t}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider mb-3">
-                      <Wrench size={14} className="text-blue-500"/> Future Implementation
+                  <div className="bg-[#0F172A] rounded-2xl p-6 border border-slate-800">
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#2DD4BF] uppercase tracking-wider mb-3">
+                      <Wrench size={14} className="text-[#2DD4BF]"/> Future Implementation
                     </h4>
-                    <p className="text-slate-600 text-sm leading-relaxed">{p.future}</p>
+                    <p className="text-slate-400 text-sm leading-relaxed">{p.future}</p>
                   </div>
 
-                  <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-xl" />
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-blue-900 uppercase tracking-wider mb-3">
-                      <Lightbulb size={14} className="text-blue-600"/> Learning Insights
+                  <div className="bg-[#8B5CF6]/5 rounded-2xl p-6 border border-[#8B5CF6]/20 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#8B5CF6]/10 rounded-full blur-xl" />
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#8B5CF6] uppercase tracking-wider mb-3">
+                      <Lightbulb size={14} className="text-[#8B5CF6]"/> Learning Insights
                     </h4>
-                    <p className="text-blue-800 text-sm leading-relaxed italic">
+                    <p className="text-[#E6EDF3]/80 text-sm leading-relaxed italic">
                       &quot;{p.insight}&quot;
                     </p>
                   </div>
