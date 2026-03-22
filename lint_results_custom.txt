@@ -1,0 +1,22 @@
+
+=== C:\Users\DELL\Desktop\Portfolio\cyber-portfolio\print_lint.js ===
+Line 1: A `require()` style import is forbidden. (@typescript-eslint/no-require-imports)
+Line 2: A `require()` style import is forbidden. (@typescript-eslint/no-require-imports)
+Line 19: 'err' is defined but never used. (@typescript-eslint/no-unused-vars)
+
+=== C:\Users\DELL\Desktop\Portfolio\cyber-portfolio\src\components\providers\SlideProvider.tsx ===
+Line 71: React Hook useEffect has a missing dependency: 'nextSlide'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+
+=== C:\Users\DELL\Desktop\Portfolio\cyber-portfolio\src\components\sections\CuriosityLog.tsx ===
+Line 5: 'Clock' is defined but never used. (@typescript-eslint/no-unused-vars)
+
+=== C:\Users\DELL\Desktop\Portfolio\cyber-portfolio\src\components\sections\ResearchArchive.tsx ===
+Line 103: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`. (react/no-unescaped-entities)
+Line 103: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`. (react/no-unescaped-entities)
+
+=== C:\Users\DELL\Desktop\Portfolio\cyber-portfolio\src\components\sections\SystemMap.tsx ===
+Line 173: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`. (react/no-unescaped-entities)
+Line 173: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`. (react/no-unescaped-entities)
+
+=== C:\Users\DELL\Desktop\Portfolio\cyber-portfolio\src\store\gamificationStore.ts ===
+Line 18: 'newBadges' is never reassigned. Use 'const' instead. (prefer-const)

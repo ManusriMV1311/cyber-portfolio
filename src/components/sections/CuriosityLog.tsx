@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useStore } from "@/store/gamificationStore";
-import { Compass, Clock, TerminalSquare } from "lucide-react";
+import { Compass, TerminalSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
 const logs = [

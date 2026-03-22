@@ -15,7 +15,7 @@ export const useStore = create<GamificationState>((set) => ({
     if (state.visitedSlides.includes(slideIndex)) return state;
     
     const newVisited = [...state.visitedSlides, slideIndex];
-    let newBadges = [...state.badges];
+    const newBadges = [...state.badges];
     
     // Logic to award badges
     if (newVisited.length >= 3 && !newBadges.includes("Explorer")) {

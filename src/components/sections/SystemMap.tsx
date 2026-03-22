@@ -1,105 +1,185 @@
 "use client";
 
-import { useEffect } from "react";
-import { motion } from "framer-motion";
-import { useSlide } from "@/components/providers/SlideProvider";
-import { useStore } from "@/store/gamificationStore";
-import { User, Share2, Lightbulb, Beaker, FileText, Compass, Network } from "lucide-react";
+import { useState } from "react";
+import { FileCode2, Target, Cpu, Wrench, Lightbulb, Workflow } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const MODULES = [
-  { id: 1, label: "Identity Core", desc: "Profile & Focus", icon: User, pos: { top: "25%", left: "5%" }, ringColor: "border-blue-500" },
-  { id: 2, label: "Skills Network", desc: "Tech Graph", icon: Share2, pos: { top: "10%", left: "30%" }, ringColor: "border-purple-500" },
-  { id: 3, label: "Innovation Lab", desc: "System Proposals", icon: Lightbulb, pos: { top: "15%", left: "65%" }, ringColor: "border-blue-400" },
-  { id: 4, label: "Tech Experiments", desc: "Interactive Tests", icon: Beaker, pos: { top: "50%", left: "85%" }, ringColor: "border-purple-400" },
-  { id: 5, label: "Research Archive", desc: "Conceptual IDEAS", icon: FileText, pos: { top: "80%", left: "65%" }, ringColor: "border-blue-500" },
-  { id: 6, label: "Curiosity Log", desc: "Learning Timeline", icon: Compass, pos: { top: "80%", left: "25%" }, ringColor: "border-purple-500" },
-  { id: 7, label: "Contact Node", desc: "Comm Links", icon: Network, pos: { top: "60%", left: "5%" }, ringColor: "border-blue-400" },
+const missions = [
+  {
+    id: "01",
+    title: "EduTrack System",
+    problem: "Inefficient manual tracking in government schools leading to resource misallocation.",
+    idea: "A teacher assistant automation system concept leveraging localized edge networks.",
+    arch: "[Mobile Client] ⟷ [Edge Server] ⟷ [Cloud DB] ⟷ [Dashboard]",
+    tech: ["React Native", "Node.js", "MongoDB", "IoT Sensors"],
+    future: "Building a hardware prototype integrated with RFID checkpoints.",
+    insight: "Learned about scaling low-cost infrastructure and offline-first data sync."
+  },
+  {
+    id: "02",
+    title: "Bodyguard Robot",
+    problem: "Lack of portable, autonomous personal safety solutions in high-risk zones.",
+    idea: "A portable robotic safety system concept using embedded environmental sensors.",
+    arch: "[Sensors] ⟷ [Microcontroller] ⟷ [Cellular Module] ⟷ [Emergency Contacts]",
+    tech: ["Arduino", "GPS/GSM Modules", "C++", "Proximity Sensors"],
+    future: "Miniaturizing the design for stealth wearable integration.",
+    insight: "Hardware integration requires robust physical error handling and redundancy."
+  },
+  {
+    id: "03",
+    title: "Automated Water Pipeline Protection",
+    problem: "Massive contextual water loss due to undetected subsurface pipeline damage.",
+    idea: "A system for detecting pressure anomalies and automatically triggering valve locks.",
+    arch: "[Flow Sensors] ⟷ [Edge AI Analyzer] ⟷ [Automated Control Valves]",
+    tech: ["IoT Flow Meters", "Python", "Actuators", "MQTT Protocols"],
+    future: "Testing computer vision for localized visual leak detection via drones.",
+    insight: "Predictive maintenance saves exponentially more than reactive fixes."
+  },
+  {
+    id: "04",
+    title: "Aerolime Environmental System",
+    problem: "Ecological and structural damage from acid rain in heavy industrial zones.",
+    idea: "AI-driven acid rain neutralization system concept using precisely timed lime dispersion.",
+    arch: "[Weather API] ⟷ [AI Predictor Model] ⟷ [Drone Dispersion Fleet]",
+    tech: ["Python", "TensorFlow", "Drone SDK", "Meteorological Datasets"],
+    future: "Simulating dispersion patterns in isolated virtual aerodynamic environments.",
+    insight: "Environmental AI requires massive, continuous geospatial datasets to be accurate."
+  }
 ];
 
 export default function SystemMap() {
-  const { markVisited } = useStore();
-  const { goToSlide, setTotalSlides } = useSlide();
-
-  useEffect(() => {
-    markVisited(0);
-    setTotalSlides(8);
-  }, [markVisited, setTotalSlides]);
+  const [activeMission, setActiveMission] = useState(0);
+  const p = missions[activeMission];
 
   return (
-    <div className="w-full h-full flex items-center justify-center relative">
-      {/* Central Node */}
-      <motion.div 
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="absolute z-20 flex flex-col items-center"
-      >
-        <div className="w-32 h-32 rounded-full lab-panel flex items-center justify-center relative shadow-[0_0_50px_rgba(59,130,246,0.3)]">
-          {/* Animated rings */}
-          <div className="absolute inset-0 rounded-full border border-blue-400/30 animate-[spin_12s_linear_infinite]" />
-          <div className="absolute -inset-2 rounded-full border border-dashed border-purple-400/20 animate-[spin_20s_linear_infinite_reverse]" />
-          <div className="text-center">
-            <h2 className="font-orbitron font-bold text-sm tracking-widest text-[#f0f5ff] text-soft-glow uppercase">Manusri</h2>
-            <p className="text-[10px] text-blue-300 font-mono mt-1">MAIN.HUB</p>
-          </div>
+    <div className="w-full max-w-6xl mx-auto px-6 py-12 flex flex-col items-center">
+      <div className="mb-12 text-center max-w-2xl">
+        <div className="inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold mb-4 tracking-wider uppercase">
+          Level 3
         </div>
-      </motion.div>
-
-      {/* Orbiting / Positioned Modules */}
-      <div className="absolute inset-0 z-10">
-        {MODULES.map((mod, i) => (
-          <motion.button
-            key={mod.id}
-            onClick={() => goToSlide(mod.id)}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 + i * 0.1, duration: 0.8, type: "spring" }}
-            className="absolute -ml-16 -mt-16 w-32 flex flex-col items-center gap-3 group"
-            style={{ top: mod.pos.top, left: mod.pos.left }}
-          >
-            {/* SVG Link line to center (visual hack: just radial background lines from center) - Handled separately if precise, but visual abstract connecting is fine here */}
-            
-            <div className={`w-16 h-16 rounded-2xl lab-panel flex items-center justify-center border transition-all duration-300 group-hover:scale-110 ${mod.ringColor}/30 group-hover:${mod.ringColor} box-soft-glow group-hover:shadow-[0_0_30px_rgba(139,92,246,0.4)]`}>
-              <mod.icon className="text-blue-100 opacity-80 group-hover:opacity-100 group-hover:text-white transition-all" size={24} />
-            </div>
-            
-            <div className="text-center opacity-70 group-hover:opacity-100 transition-opacity">
-               <h3 className="text-xs font-orbitron font-bold tracking-widest text-blue-100">{mod.label}</h3>
-               <p className="text-[10px] text-purple-300/80 font-mono uppercase tracking-widest mt-1">{mod.desc}</p>
-            </div>
-          </motion.button>
-        ))}
-        
-        {/* Draw abstract SVG lines from center to nodes */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="lineGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#3b82f6" stopOpacity="1"/>
-              <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0"/>
-            </radialGradient>
-          </defs>
-          {MODULES.map((mod) => (
-            <line 
-              key={`line-${mod.id}`}
-              x1="50%" y1="50%" 
-              x2={mod.pos.left} y2={mod.pos.top} 
-              stroke="url(#lineGrad)" 
-              strokeWidth="2"
-              className="dash-animate"
-              strokeDasharray="4 4"
-            />
-          ))}
-        </svg>
+        <h2 className="text-3xl md:text-4xl font-poppins font-bold text-[#0F172A] mb-4">
+          Project Missions
+        </h2>
+        <p className="text-lg text-slate-600 leading-relaxed">
+          Explore my conceptual projects and research systems through this dashboard interface.
+        </p>
       </div>
 
-      <style jsx>{`
-        .dash-animate {
-          animation: dashMove 20s linear infinite;
-        }
-        @keyframes dashMove {
-          to { stroke-dashoffset: 1000; }
-        }
-      `}</style>
+      <div className="w-full bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+        
+        {/* Sidebar / Mission Index */}
+        <div className="w-full md:w-1/3 bg-slate-50 border-r border-slate-200 p-6 flex flex-col gap-3">
+          <h3 className="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2 px-2">Active Missions</h3>
+          {missions.map((m, idx) => (
+            <button
+              key={m.id}
+              onClick={() => setActiveMission(idx)}
+              className={`flex flex-col text-left p-4 rounded-xl border transition-all duration-300 ${
+                activeMission === idx 
+                  ? "bg-blue-50 border-blue-400 shadow-sm ring-1 ring-blue-400/20" 
+                  : "bg-white border-slate-200 hover:border-blue-300 hover:bg-slate-50"
+              }`}
+            >
+              <div className="flex items-center gap-2 mb-1">
+                <FileCode2 size={16} className={activeMission === idx ? "text-blue-500" : "text-slate-400"} />
+                <span className={`font-mono text-xs tracking-wider ${activeMission === idx ? "text-blue-600 font-semibold" : "text-slate-500"}`}>MISSION {m.id}</span>
+              </div>
+              <span className={`font-poppins font-semibold text-sm leading-tight ${activeMission === idx ? "text-[#0F172A]" : "text-slate-600"}`}>{m.title}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Main Dashboard Panel */}
+        <div className="flex-1 flex flex-col bg-white">
+          <div className="w-full border-b border-slate-100 p-6 bg-white flex items-center justify-between sticky top-0 z-10">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+                <Target size={20} />
+              </div>
+              <div>
+                <h3 className="font-poppins font-bold text-xl text-[#0F172A]">{p.title}</h3>
+                <span className="font-mono text-xs text-blue-600 uppercase tracking-wider">Mission Details</span>
+              </div>
+            </div>
+            <span className="text-[10px] uppercase text-green-600 font-bold bg-green-100 px-3 py-1 rounded-full border border-green-200">System Logged</span>
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={p.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="p-8 overflow-y-auto flex-1 h-full"
+            >
+              
+              <div className="mb-8">
+                <h4 className="flex items-center gap-2 text-sm font-semibold text-[#0F172A] uppercase tracking-wider mb-2">
+                  <Lightbulb size={16} className="text-blue-500"/> Concept Idea
+                </h4>
+                <p className="text-slate-600 text-lg leading-relaxed">{p.idea}</p>
+              </div>
+
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                
+                {/* Column 1 */}
+                <div className="space-y-8">
+                  <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider mb-3">
+                      <Target size={14} className="text-red-500"/> Problem
+                    </h4>
+                    <p className="text-slate-600 text-sm leading-relaxed">{p.problem}</p>
+                  </div>
+
+                  <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider mb-4">
+                      <Workflow size={14} className="text-indigo-500"/> System Workflow
+                    </h4>
+                    <div className="p-4 bg-slate-50 rounded-xl font-mono text-xs text-indigo-700 font-medium leading-relaxed border border-indigo-100 flex items-center justify-center text-center">
+                      {p.arch}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Column 2 */}
+                <div className="space-y-8">
+                  <div>
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider mb-3">
+                      <Cpu size={14} className="text-cyan-500"/> Technologies
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {p.tech.map(t => (
+                        <span key={t} className="text-xs px-3 py-1.5 rounded-lg bg-cyan-50 text-cyan-700 border border-cyan-100 font-medium">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider mb-3">
+                      <Wrench size={14} className="text-blue-500"/> Future Implementation
+                    </h4>
+                    <p className="text-slate-600 text-sm leading-relaxed">{p.future}</p>
+                  </div>
+
+                  <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-xl" />
+                    <h4 className="flex items-center gap-2 text-xs font-bold text-blue-900 uppercase tracking-wider mb-3">
+                      <Lightbulb size={14} className="text-blue-600"/> Learning Insights
+                    </h4>
+                    <p className="text-blue-800 text-sm leading-relaxed italic">
+                      &quot;{p.insight}&quot;
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
     </div>
   );
 }

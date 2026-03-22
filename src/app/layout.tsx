@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { Inter, Orbitron } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import { SlideProvider } from "@/components/providers/SlideProvider";
 import MainLayout from "@/components/layout/MainLayout";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const orbitron = Orbitron({ subsets: ["latin"], variable: "--font-orbitron" });
+const poppins = Poppins({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-poppins",
+});
 
 export const metadata: Metadata = {
-  title: "Manusri M V | Cyber Command Portfolio",
+  title: "Manusri M V | Digital Innovation Lab",
   description: "Interactive Cybersecurity & AI Portfolio of Manusri M V",
 };
 
@@ -18,11 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${orbitron.variable}`}>
-      <body className="antialiased overflow-hidden bg-[#0a0a1a] text-white selection:bg-[#bc13fe] selection:text-white">
-        <SlideProvider>
-          <MainLayout>{children}</MainLayout>
-        </SlideProvider>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} scroll-smooth`}>
+      <body className="antialiased min-h-screen bg-[#F8FAFC] text-[#0F172A] selection:bg-[#3B82F6] selection:text-white font-inter">
+        <MainLayout>{children}</MainLayout>
       </body>
     </html>
   );

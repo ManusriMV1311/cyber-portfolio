@@ -1,54 +1,53 @@
 "use client";
 
-import { useSlide } from "@/components/providers/SlideProvider";
-import { AnimatePresence, motion } from "framer-motion";
+import React from "react";
 
 // Modules
-import SystemMap from "@/components/sections/SystemMap";
+import WelcomeSection from "@/components/sections/WelcomeSection";
 import IdentityCore from "@/components/sections/IdentityCore";
 import SkillsNetwork from "@/components/sections/SkillsNetwork";
-import InnovationLabCaseFiles from "@/components/sections/InnovationLabCaseFiles";
+import SystemMap from "@/components/sections/SystemMap";
 import TechExperiments from "@/components/sections/TechExperiments";
 import ResearchArchive from "@/components/sections/ResearchArchive";
-import CuriosityLog from "@/components/sections/CuriosityLog";
 import ContactNode from "@/components/sections/ContactNode";
 
 export default function Home() {
-  const { currentSlide } = useSlide();
-
-  // 0: SystemMap
-  // 1: IdentityCore
-  // 2: SkillsNetwork
-  // 3: InnovationLabCaseFiles
-  // 4: TechExperiments
-  // 5: ResearchArchive
-  // 6: CuriosityLog
-  // 7: ContactNode
-  const slides = [
-    <SystemMap key="0" />,
-    <IdentityCore key="1" />,
-    <SkillsNetwork key="2" />,
-    <InnovationLabCaseFiles key="3" />,
-    <TechExperiments key="4" />,
-    <ResearchArchive key="5" />,
-    <CuriosityLog key="6" />,
-    <ContactNode key="7" />,
-  ];
-
   return (
-    <div className="w-full h-full relative overflow-hidden flex items-center justify-center">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0, scale: 0.98, filter: "blur(5px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          exit={{ opacity: 0, scale: 1.02, filter: "blur(5px)" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full h-full max-w-7xl relative"
-        >
-          {slides[currentSlide]}
-        </motion.div>
-      </AnimatePresence>
+    <div className="w-full flex flex-col gap-32 py-12 relative z-10">
+      <section id="level-0" className="w-full min-h-[90vh] flex items-center justify-center scroll-mt-24">
+        <WelcomeSection />
+      </section>
+
+      <section id="level-1" className="w-full min-h-screen flex items-center justify-center scroll-mt-24 relative">
+        {/* Timeline Line connecting sections */}
+        <div className="absolute top-0 bottom-0 left-8 md:left-1/2 md:-ml-px w-0.5 bg-blue-100 hidden md:block"></div>
+        <IdentityCore />
+      </section>
+
+      <section id="level-2" className="w-full min-h-screen flex items-center justify-center scroll-mt-24 relative">
+        <div className="absolute top-0 bottom-0 left-8 md:left-1/2 md:-ml-px w-0.5 bg-blue-100 hidden md:block"></div>
+        <SkillsNetwork />
+      </section>
+
+      <section id="level-3" className="w-full min-h-screen flex items-center justify-center scroll-mt-24 relative">
+        <div className="absolute top-0 bottom-0 left-8 md:left-1/2 md:-ml-px w-0.5 bg-blue-100 hidden md:block"></div>
+        <SystemMap />
+      </section>
+
+      <section id="level-4" className="w-full min-h-screen flex items-center justify-center scroll-mt-24 relative">
+        <div className="absolute top-0 bottom-0 left-8 md:left-1/2 md:-ml-px w-0.5 bg-blue-100 hidden md:block"></div>
+        <TechExperiments />
+      </section>
+
+      <section id="level-5" className="w-full min-h-screen flex items-center justify-center scroll-mt-24 relative">
+        <div className="absolute top-0 bottom-0 left-8 md:left-1/2 md:-ml-px w-0.5 bg-blue-100 hidden md:block"></div>
+        <ResearchArchive />
+      </section>
+
+      <section id="level-6" className="w-full min-h-screen flex items-center justify-center scroll-mt-24 relative">
+        <div className="absolute top-0 bottom-1/2 left-8 md:left-1/2 md:-ml-px w-0.5 bg-blue-100 hidden md:block"></div>
+        <ContactNode />
+      </section>
     </div>
   );
 }

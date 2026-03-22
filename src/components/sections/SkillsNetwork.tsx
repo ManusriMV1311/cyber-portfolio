@@ -1,107 +1,152 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useStore } from "@/store/gamificationStore";
-import { motion, AnimatePresence } from "framer-motion";
-import { Network, Database, Code2, Cpu, Scan } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Code2, Database, ShieldAlert, Cpu, CheckCircle2 } from "lucide-react";
 
-// The Nodes
-const nodes = [
-  { id: "Cybersecurity", top: "10%", left: "20%", icon: Scan, desc: "Networking, SOC basics, Threat Intelligence, CTF Solving." },
-  { id: "Programming", top: "20%", left: "80%", icon: Code2, desc: "C, C++, Java, Python core backend foundations." },
-  { id: "Emerging Tech", top: "70%", left: "75%", icon: Cpu, desc: "IoT, Robotics, AI logic, Automation systems." },
-  { id: "Web Dev", top: "80%", left: "25%", icon: Database, desc: "HTML, CSS, React, MongoDB interfaces." },
+// Categories and matching logic
+const skillsData = [
+  { id: "sec", title: "Cybersecurity", icon: ShieldAlert, desc: "Network defense, SOC workflows, and threat intelligence.", matchId: "use-sec" },
+  { id: "prog", title: "Programming", icon: Code2, desc: "Python, Java, C++ for building scalable logic.", matchId: "use-prog" },
+  { id: "web", title: "Web Development", icon: Database, desc: "React, Next.js, Tailwind for responsive interfaces.", matchId: "use-web" },
+  { id: "tech", title: "Emerging Tech", icon: Cpu, desc: "Robotics, AI, IoT integrations.", matchId: "use-tech" },
+];
+
+const useCases = [
+  { id: "use-web", label: "Interactive user interfaces" },
+  { id: "use-prog", label: "Automated backend scripts" },
+  { id: "use-tech", label: "Autonomous hardware logic" },
+  { id: "use-sec", label: "Security monitoring & defense" },
 ];
 
 export default function SkillsNetwork() {
-  const { markVisited } = useStore();
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+  const [matchedPairs, setMatchedPairs] = useState<string[]>([]);
+  const [wrongMatch, setWrongMatch] = useState<string | null>(null);
 
-  useEffect(() => {
-    markVisited(2);
-  }, [markVisited]);
+  const handleSkillClick = (id: string) => {
+    if (matchedPairs.includes(id)) return;
+    setSelectedSkill(id);
+    setWrongMatch(null);
+  };
+
+  const handleUseCaseClick = (useCaseId: string) => {
+    if (!selectedSkill) return;
+
+    const skill = skillsData.find(s => s.id === selectedSkill);
+    if (skill && skill.matchId === useCaseId) {
+      setMatchedPairs([...matchedPairs, selectedSkill]);
+      setSelectedSkill(null);
+      setWrongMatch(null);
+    } else {
+      setWrongMatch(useCaseId);
+      setTimeout(() => setWrongMatch(null), 800);
+      setSelectedSkill(null);
+    }
+  };
+
+  const isAllMatched = matchedPairs.length === skillsData.length;
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center max-w-5xl mx-auto py-10 relative">
-      <div className="absolute top-0 left-0 flex items-center gap-3">
-        <Network className="text-blue-500 w-8 h-8 opacity-80" />
-        <div>
-          <h2 className="text-2xl font-orbitron font-bold tracking-widest uppercase text-soft-glow">
-            Skills Network
-          </h2>
-          <p className="text-xs text-gray-500 font-mono tracking-widest mt-1">MODULE.CAPABILITIES</p>
+    <div className="w-full max-w-6xl mx-auto px-6 flex flex-col items-center py-12">
+      <div className="mb-12 text-center max-w-2xl">
+        <div className="inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold mb-4 tracking-wider uppercase">
+          Level 2
+        </div>
+        <h2 className="text-3xl md:text-4xl font-poppins font-bold text-[#0F172A] mb-4">
+          Core Proficiencies
+        </h2>
+        <p className="text-lg text-slate-600 leading-relaxed">
+          Explore my technical skills. Select a skill card on the left and match it to its real-world application on the right.
+        </p>
+      </div>
+
+      <div className="w-full bg-white rounded-3xl shadow-sm border border-slate-200 p-8 flex flex-col lg:flex-row gap-12">
+        {/* Left: Skills Cards */}
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {skillsData.map((skill) => {
+            const isMatched = matchedPairs.includes(skill.id);
+            const isSelected = selectedSkill === skill.id;
+            
+            return (
+              <button
+                key={skill.id}
+                onClick={() => handleSkillClick(skill.id)}
+                disabled={isMatched}
+                className={`text-left p-6 rounded-2xl border transition-all duration-300 relative overflow-hidden flex flex-col items-start ${
+                  isMatched 
+                    ? "bg-green-50/50 border-green-200 opacity-60" 
+                    : isSelected
+                    ? "bg-blue-50 border-blue-400 shadow-md ring-4 ring-blue-400/10 -translate-y-1"
+                    : "bg-slate-50 border-slate-200 hover:border-blue-300 hover:bg-slate-100 hover:-translate-y-1"
+                }`}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`p-2.5 rounded-xl ${isMatched ? "bg-green-100 text-green-600" : "bg-white text-blue-600 shadow-sm"}`}>
+                    <skill.icon size={22} />
+                  </div>
+                  <h3 className="font-semibold text-[#0F172A] font-poppins">{skill.title}</h3>
+                </div>
+                <p className="text-sm text-slate-600 leading-relaxed">{skill.desc}</p>
+                
+                {isMatched && (
+                  <div className="absolute top-5 right-5 text-green-500">
+                    <CheckCircle2 size={24} />
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right: Use cases (Challenge) */}
+        <div className="w-full lg:w-1/3 flex flex-col justify-center gap-3 bg-slate-50/80 p-6 rounded-2xl border border-slate-100">
+          <h3 className="font-poppins font-semibold text-[#0F172A] mb-4 text-center">
+            Mission: Match to Applications
+          </h3>
+          
+          {useCases.map((useCase) => {
+            const matchedSkill = skillsData.find(s => s.matchId === useCase.id && matchedPairs.includes(s.id));
+            const isWrong = wrongMatch === useCase.id;
+
+            return (
+              <button
+                key={useCase.id}
+                onClick={() => handleUseCaseClick(useCase.id)}
+                disabled={!!matchedSkill || !selectedSkill}
+                className={`w-full p-4 rounded-xl border text-sm font-medium transition-all duration-300 ${
+                  matchedSkill
+                    ? "bg-green-500 text-white border-green-600 shadow-inner"
+                    : isWrong
+                    ? "bg-red-50 text-red-600 border-red-300 translate-x-1"
+                    : selectedSkill
+                    ? "bg-white border-blue-300 text-[#0F172A] hover:bg-blue-50 hover:shadow-sm cursor-pointer border-dashed border-2"
+                    : "bg-white/50 border-slate-200 text-slate-400 cursor-not-allowed border-dashed"
+                }`}
+              >
+                {matchedSkill ? `Matches: ${matchedSkill.title}` : useCase.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      <div className="relative w-full h-[60vh] lab-panel mt-16 overflow-hidden rounded-2xl flex items-center justify-center border border-blue-500/20 box-soft-glow">
-        
-        {/* SVG Connections */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-          {/* Programming -> Emerging Tech */}
-          <line x1="80%" y1="20%" x2="75%" y2="70%" className={`transition-all duration-300 ${hoveredNode === 'Programming' || hoveredNode === 'Emerging Tech' ? 'node-link-active' : 'node-link'}`} />
-          
-          {/* Cybersecurity -> Emerging Tech */}
-          <line x1="20%" y1="10%" x2="75%" y2="70%" className={`transition-all duration-300 ${hoveredNode === 'Cybersecurity' || hoveredNode === 'Emerging Tech' ? 'node-link-active' : 'node-link'}`} />
-          
-          {/* Web Dev -> Cybersecurity */}
-          <line x1="25%" y1="80%" x2="20%" y2="10%" className={`transition-all duration-300 ${hoveredNode === 'Web Dev' || hoveredNode === 'Cybersecurity' ? 'node-link-active' : 'node-link'}`} />
-
-          {/* Programming -> Web Dev */}
-          <line x1="80%" y1="20%" x2="25%" y2="80%" className={`transition-all duration-300 ${hoveredNode === 'Programming' || hoveredNode === 'Web Dev' ? 'node-link-active' : 'node-link'}`} />
-        </svg>
-
-        {/* Interactive Nodes */}
-        {nodes.map((node, i) => (
-          <motion.div
-            key={node.id}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2 + i * 0.1, type: "spring" }}
-            className="absolute -ml-8 -mt-8 flex flex-col items-center group z-10"
-            style={{ top: node.top, left: node.left }}
-            onMouseEnter={() => setHoveredNode(node.id)}
-            onMouseLeave={() => setHoveredNode(null)}
+      {/* Next Level Button */}
+      {isAllMatched && (
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           className="mt-12"
+        >
+          <button
+            onClick={() => document.getElementById("level-3")?.scrollIntoView({ behavior: "smooth" })}
+            className="px-8 py-4 bg-[#0F172A] hover:bg-blue-600 text-white font-medium rounded-xl shadow-lg transition-colors flex items-center gap-3"
           >
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer ${
-              hoveredNode === node.id 
-                ? "bg-blue-600 border-2 border-white box-soft-glow" 
-                : "bg-[#05050f] border-2 border-blue-500 hover:border-blue-400"
-            }`}>
-              <node.icon className={`transition-colors duration-300 ${hoveredNode === node.id ? "text-white" : "text-blue-400"}`} size={24} />
-            </div>
-            
-            <div className="mt-3 text-center bg-[#05050f]/80 px-3 py-1 rounded backdrop-blur border border-blue-400/20">
-              <h3 className={`font-orbitron font-bold text-xs tracking-wider transition-colors ${hoveredNode === node.id ? "text-white" : "text-blue-100"}`}>
-                {node.id}
-              </h3>
-            </div>
-          </motion.div>
-        ))}
-
-        {/* Central Info Panel (Responsive to Hover) */}
-        <AnimatePresence mode="wait">
-          <motion.div 
-            key={hoveredNode || "empty"}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="z-0 max-w-sm text-center px-6 pointer-events-none"
-          >
-            {hoveredNode ? (
-              <div className="lab-panel p-6 border-blue-400/40">
-                <h4 className="text-xl font-orbitron font-bold text-white mb-2">{hoveredNode}</h4>
-                <p className="text-gray-300 text-sm leading-relaxed">{nodes.find(n => n.id === hoveredNode)?.desc}</p>
-              </div>
-            ) : (
-              <div className="opacity-50">
-                <Scan size={48} className="mx-auto text-gray-600 mb-4" />
-                <p className="text-sm font-mono tracking-widest text-gray-400">HOVER OVER NODES TO DECRYPT DATA</p>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+            System Unlocked: Proceed to Project Missions
+            <CheckCircle2 size={20} />
+          </button>
+        </motion.div>
+      )}
     </div>
   );
 }

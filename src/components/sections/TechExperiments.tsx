@@ -1,121 +1,153 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useStore } from "@/store/gamificationStore";
-import { Beaker, ShieldAlert, KeyRound, Activity } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { KeyRound, Lock } from "lucide-react";
 
 export default function TechExperiments() {
-  const { markVisited } = useStore();
-  const [activeExp, setActiveExp] = useState(0);
+  // Exp 1: Password
   const [pwd, setPwd] = useState("");
+  // Exp 2: Cipher
+  const [cipherText, setCipherText] = useState("CYBER");
+  const [shift, setShift] = useState(3);
 
-  useEffect(() => {
-    markVisited(4);
-  }, [markVisited]);
+  // Exp 1 Logic
+  const score = (() => {
+    let s = 0;
+    if (pwd.length > 8) s++;
+    if (pwd.length > 12) s++;
+    if (/[A-Z]/.test(pwd)) s++;
+    if (/[0-9]/.test(pwd)) s++;
+    if (/[^A-Za-z0-9]/.test(pwd)) s++;
+    return s;
+  })();
+  
+  const getPwdState = () => {
+    if (pwd.length === 0) return { label: "AWAITING INPUT", color: "text-slate-500", bar: "bg-slate-200" };
+    if (score < 3) return { label: "WEAK", color: "text-red-500", bar: "bg-red-500" };
+    if (score < 4) return { label: "MODERATE", color: "text-amber-500", bar: "bg-amber-500" };
+    return { label: "STRONG", color: "text-green-500", bar: "bg-emerald-500" };
+  };
+  const pwdState = getPwdState();
 
-  const analyzePassword = (password: string) => {
-    let score = 0;
-    if (password.length > 8) score++;
-    if (password.length > 12) score++;
-    if (/[A-Z]/.test(password)) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/[^A-Za-z0-9]/.test(password)) score++;
-    return score;
+  // Exp 2 Logic
+  const applyCipher = (text: string, s: number) => {
+    return text.toUpperCase().replace(/[A-Z]/g, c => 
+      String.fromCharCode(((c.charCodeAt(0) - 65 + s) % 26 + 26) % 26 + 65)
+    );
   };
 
-  const score = analyzePassword(pwd);
-  let status = "WEAK";
-  let color = "text-red-400";
-  let barColor = "bg-red-500";
-  if (score >= 3) { status = "NOMINAL"; color = "text-yellow-400"; barColor = "bg-yellow-500"; }
-  if (score >= 4) { status = "SECURE"; color = "text-blue-400"; barColor = "bg-blue-500"; }
-  if (pwd.length === 0) { status = "AWAITING INPUT"; color = "text-gray-500"; barColor = "bg-gray-800"; }
-
-  const lenClass = pwd.length > 8 ? "bg-blue-500/20 text-blue-400" : "bg-gray-800 text-gray-500";
-  const upClass = /[A-Z]/.test(pwd) ? "bg-blue-500/20 text-blue-400" : "bg-gray-800 text-gray-500";
-  const numClass = /[0-9]/.test(pwd) ? "bg-purple-500/20 text-purple-400" : "bg-gray-800 text-gray-500";
-  const symClass = /[^A-Za-z0-9]/.test(pwd) ? "bg-purple-500/20 text-purple-400" : "bg-gray-800 text-gray-500";
-
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center relative overflow-hidden max-w-5xl mx-auto py-10">
-      <div className="flex items-center gap-3 mb-10 w-full">
-        <Beaker className="text-purple-400 w-8 h-8 opacity-80" />
-        <div>
-          <h2 className="text-2xl font-orbitron font-bold tracking-widest uppercase text-white">
-            Tech Experiments
-          </h2>
-          <p className="text-xs text-purple-300 font-mono tracking-widest mt-1">LAB.TEST.MODULES</p>
+    <div className="w-full max-w-6xl mx-auto px-6 py-12 flex flex-col items-center">
+      <div className="mb-12 text-center max-w-2xl">
+        <div className="inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold mb-4 tracking-wider uppercase">
+          Level 4
         </div>
+        <h2 className="text-3xl md:text-4xl font-poppins font-bold text-[#0F172A] mb-4">
+          Tech Experiments
+        </h2>
+        <p className="text-lg text-slate-600 leading-relaxed">
+          Interact with small conceptual demonstrations exploring cryptography and security principles.
+        </p>
       </div>
 
-      <div className="w-full flex gap-4 mb-6">
-         <button onClick={() => setActiveExp(0)} className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-xs tracking-wider transition-all ${activeExp === 0 ? "bg-blue-600 border border-blue-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]" : "bg-black/50 border border-gray-800 text-gray-400"}`}>
-            <KeyRound size={14}/> EXPERIMENT 01: ENTROPY
-         </button>
-         <button onClick={() => setActiveExp(1)} className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-xs tracking-wider transition-all ${activeExp === 1 ? "bg-purple-600 border border-purple-400 text-white shadow-[0_0_15px_rgba(139,92,246,0.3)]" : "bg-black/50 border border-gray-800 text-gray-400"}`}>
-            <Activity size={14}/> EXPERIMENT 02: DETECTION (WIP)
-         </button>
-      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
+        
+        {/* Experiment 01 */}
+        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl">
+              <KeyRound size={22} />
+            </div>
+            <div>
+              <span className="font-mono text-xs text-blue-600 tracking-wider font-semibold uppercase">Experiment 01</span>
+              <h3 className="font-poppins font-bold text-lg text-[#0F172A]">Password Entropy</h3>
+            </div>
+          </div>
+          
+          <p className="text-slate-600 text-sm mb-8 flex-1 leading-relaxed">
+            Test string permutations against dictionary constraints to evaluate brute-force resilience.
+          </p>
 
-      <div className="w-full lab-panel p-8 min-h-[50vh] flex flex-col items-center justify-center relative">
-        <AnimatePresence mode="wait">
-          {activeExp === 0 ? (
-            <motion.div 
-              key="exp1"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="w-full max-w-2xl"
-            >
-               <div className="mb-8 text-center">
-                 <h3 className="text-xl font-orbitron font-bold text-white">Password Entropy Evaluator</h3>
-                 <p className="text-sm text-gray-400 mt-2">Test string permutations against dictionary constraints to evaluate brute-force resilience.</p>
-               </div>
+          <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl flex flex-col gap-6">
+            <input 
+              type="password"
+              value={pwd}
+              onChange={(e) => setPwd(e.target.value)}
+              placeholder="Enter authentication string..."
+              className="w-full bg-white border border-slate-300 rounded-xl p-3.5 text-center font-mono text-sm focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-[#0F172A] shadow-sm"
+            />
+            
+            <div>
+              <div className="flex justify-between font-mono text-xs font-bold mb-2">
+                <span className="text-slate-500 tracking-wider">STATUS</span>
+                <span className={pwdState.color}>{pwdState.label}</span>
+              </div>
+              <div className="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden shadow-inner">
+                <div 
+                  className={`h-full transition-all duration-300 ${pwdState.bar}`} 
+                  style={{ width: pwd.length === 0 ? "0%" : `${(score / 5) * 100}%` }}
+                />
+              </div>
+            </div>
 
-               <div className="bg-[#05050f] border border-gray-800 p-6 rounded-xl">
-                 <input 
-                  type="password"
-                  value={pwd}
-                  onChange={(e) => setPwd(e.target.value)}
-                  placeholder="Insert auth string..."
-                  className="w-full bg-black/50 border border-blue-500/30 rounded-lg p-4 text-center text-white font-mono text-lg focus:outline-none focus:border-blue-500 focus:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all mb-6"
-                 />
+            <div className="grid grid-cols-2 gap-2 text-[11px] font-mono text-center font-semibold tracking-wide">
+              <div className={`py-2 rounded-lg border transition-colors ${pwd.length > 8 ? "bg-blue-50 text-blue-700 border-blue-200" : "bg-white text-slate-400 border-slate-200"}`}>LEN &gt; 8</div>
+              <div className={`py-2 rounded-lg border transition-colors ${/[A-Z]/.test(pwd) ? "bg-blue-50 text-blue-700 border-blue-200" : "bg-white text-slate-400 border-slate-200"}`}>UPPERCASE</div>
+              <div className={`py-2 rounded-lg border transition-colors ${/[0-9]/.test(pwd) ? "bg-cyan-50 text-cyan-700 border-cyan-200" : "bg-white text-slate-400 border-slate-200"}`}>NUMERIC</div>
+              <div className={`py-2 rounded-lg border transition-colors ${/[^A-Za-z0-9]/.test(pwd) ? "bg-cyan-50 text-cyan-700 border-cyan-200" : "bg-white text-slate-400 border-slate-200"}`}>SYMBOL</div>
+            </div>
+          </div>
+        </div>
 
-                 <div className="flex justify-between text-xs font-mono mb-2 tracking-widest">
-                  <span className="text-gray-500">EVALUATION</span>
-                  <span className={color}>{status}</span>
-                 </div>
-                 <div className="w-full h-1.5 bg-gray-900 rounded-full overflow-hidden mb-6">
-                  <div 
-                    className={`h-full transition-all duration-300 ${barColor}`} 
-                    style={{ width: pwd.length === 0 ? "0%" : `${(score / 5) * 100}%` }}
-                  />
-                 </div>
+        {/* Experiment 02 */}
+        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
+              <Lock size={22} />
+            </div>
+            <div>
+              <span className="font-mono text-xs text-indigo-600 tracking-wider font-semibold uppercase">Experiment 02</span>
+              <h3 className="font-poppins font-bold text-lg text-[#0F172A]">Shift Cipher Logic</h3>
+            </div>
+          </div>
+          
+          <p className="text-slate-600 text-sm mb-8 flex-1 leading-relaxed">
+            Understand basic cryptographic encoding by shifting letters across the alphabet (Caesar Cipher).
+          </p>
 
-                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono text-center">
-                   <div className={`py-2 rounded border border-gray-800 ${lenClass}`}>Length &gt; 8</div>
-                   <div className={`py-2 rounded border border-gray-800 ${upClass}`}>Uppercase</div>
-                   <div className={`py-2 rounded border border-gray-800 ${numClass}`}>Numeric</div>
-                   <div className={`py-2 rounded border border-gray-800 ${symClass}`}>Symbol</div>
-                 </div>
-               </div>
-            </motion.div>
-          ) : (
-            <motion.div 
-              key="exp2"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="text-center"
-            >
-               <ShieldAlert size={48} className="mx-auto text-yellow-500/50 mb-4 animate-pulse" />
-               <h3 className="text-xl font-orbitron font-bold text-white border-b border-gray-800 pb-2 mb-4 inline-block">Anomaly Detection</h3>
-               <p className="text-gray-400 text-sm font-mono">// MODULE CURRENTLY IN RESEARCH PHASE</p>
-               <p className="text-gray-500 text-xs mt-2 max-w-sm mx-auto">This simulation will visualize basic network packet drop rates under simulated DDoS constraints.</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl flex flex-col gap-6">
+            <div>
+              <label className="text-[11px] font-bold font-mono text-slate-500 mb-2 block tracking-wider">INPUT STRING</label>
+              <input 
+                type="text"
+                maxLength={15}
+                value={cipherText}
+                onChange={(e) => setCipherText(e.target.value.replace(/[^A-Za-z]/g, ''))}
+                placeholder="TEXT (A-Z)"
+                className="w-full bg-white border border-slate-300 rounded-xl p-3.5 text-center font-mono text-sm focus:outline-none focus:border-indigo-500 uppercase focus:ring-4 focus:ring-indigo-500/10 transition-all text-[#0F172A] shadow-sm"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-[11px] font-bold font-mono text-slate-500 tracking-wider">SHIFT FACTOR: <span className="text-indigo-600">{shift}</span></label>
+              <input 
+                type="range"
+                min="1" max="25"
+                value={shift}
+                onChange={(e) => setShift(parseInt(e.target.value))}
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-500 outline-none hover:bg-slate-300 transition-colors"
+              />
+            </div>
+
+            <div className="p-5 bg-indigo-50 border border-indigo-100 rounded-xl text-center relative overflow-hidden shadow-inner">
+              <span className="text-[10px] absolute top-2 left-3 text-indigo-400 font-bold tracking-widest">OUTPUT</span>
+              <div className="font-mono text-2xl font-bold text-indigo-700 tracking-[0.25em] mt-3 break-all">
+                {applyCipher(cipherText, shift) || "..."}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
