@@ -34,6 +34,12 @@ export function SlideProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
+      const target = e.target as Element;
+      // Do not hijack scroll if we are inside a scrollable container
+      if (target.closest('.overflow-y-auto') || target.closest('.overflow-auto')) {
+        return;
+      }
+
       e.preventDefault();
       const now = Date.now();
       if (now - lastScrollTime < 800) return; // Debounce scroll transitions
