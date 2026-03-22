@@ -1,185 +1,202 @@
 "use client";
 
 import { useState } from "react";
-import { FileCode2, Target, Cpu, Wrench, Lightbulb, Workflow } from "lucide-react";
+import { FileCode2, Target, Cpu, Wrench, Lightbulb, Workflow, Info } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const missions = [
+const projects = [
   {
     id: "01",
     title: "EduTrack System",
-    problem: "Inefficient manual tracking in government schools leading to resource misallocation.",
-    idea: "A teacher assistant automation system concept leveraging localized edge networks.",
-    arch: "[Mobile Client] ⟷ [Edge Server] ⟷ [Cloud DB] ⟷ [Dashboard]",
+    problem: "Inefficient manual tracking in government schools leading to resource misallocation and poor attendance monitoring.",
+    concept: "A localized teacher assistant automation system concept leveraging edge networks for low-latency data synchronization.",
+    workflow: "[Mobile Client] ⟷ [Edge Server] ⟷ [Cloud DB] ⟷ [Insight Dashboard]",
     tech: ["React Native", "Node.js", "MongoDB", "IoT Sensors"],
-    future: "Building a hardware prototype integrated with RFID checkpoints.",
-    insight: "Learned about scaling low-cost infrastructure and offline-first data sync."
+    future: "Building a hardware prototype integrated with RFID checkpoints for automated classroom entry/exit detection.",
+    delay: 0.1
   },
   {
     id: "02",
     title: "Bodyguard Robot",
-    problem: "Lack of portable, autonomous personal safety solutions in high-risk zones.",
-    idea: "A portable robotic safety system concept using embedded environmental sensors.",
-    arch: "[Sensors] ⟷ [Microcontroller] ⟷ [Cellular Module] ⟷ [Emergency Contacts]",
+    problem: "Lack of portable, autonomous personal safety solutions in high-risk zones where manual surveillance is impossible.",
+    concept: "A portable robotic safety system concept using embedded environmental sensors and real-time distress signaling.",
+    workflow: "[Sensors] ⟷ [Microcontroller] ⟷ [Cellular Module] ⟷ [Emergency Contacts]",
     tech: ["Arduino", "GPS/GSM Modules", "C++", "Proximity Sensors"],
-    future: "Miniaturizing the design for stealth wearable integration.",
-    insight: "Hardware integration requires robust physical error handling and redundancy."
+    future: "Miniaturizing the design for stealth wearable integration and long-range Mesh network support.",
+    delay: 0.2
   },
   {
     id: "03",
-    title: "Automated Water Pipeline Protection",
-    problem: "Massive contextual water loss due to undetected subsurface pipeline damage.",
-    idea: "A system for detecting pressure anomalies and automatically triggering valve locks.",
-    arch: "[Flow Sensors] ⟷ [Edge AI Analyzer] ⟷ [Automated Control Valves]",
+    title: "Water Pipeline Protection",
+    problem: "Massive contextual water loss due to undetected subsurface pipeline damage and pressure leakage.",
+    concept: "An automated detection system for identifying pressure anomalies and automatically triggering valve locks.",
+    workflow: "[Flow Sensors] ⟷ [Edge AI Analyzer] ⟷ [Automated Control Valves]",
     tech: ["IoT Flow Meters", "Python", "Actuators", "MQTT Protocols"],
-    future: "Testing computer vision for localized visual leak detection via drones.",
-    insight: "Predictive maintenance saves exponentially more than reactive fixes."
+    future: "Testing autonomous computer vision for localized visual leak detection via tethered inspection drones.",
+    delay: 0.3
   },
   {
     id: "04",
     title: "Aerolime Environmental System",
-    problem: "Ecological and structural damage from acid rain in heavy industrial zones.",
-    idea: "AI-driven acid rain neutralization system concept using precisely timed lime dispersion.",
-    arch: "[Weather API] ⟷ [AI Predictor Model] ⟷ [Drone Dispersion Fleet]",
+    problem: "Severe ecological and structural damage from acid rain in heavy industrial zones affecting heritage and health.",
+    concept: "An AI-driven neutralization system concept using precisely timed lime dispersion based on weather data.",
+    workflow: "[Weather API] ⟷ [AI Predictor Model] ⟷ [Drone Dispersion Fleet]",
     tech: ["Python", "TensorFlow", "Drone SDK", "Meteorological Datasets"],
-    future: "Simulating dispersion patterns in isolated virtual aerodynamic environments.",
-    insight: "Environmental AI requires massive, continuous geospatial datasets to be accurate."
+    future: "Simulating dispersion patterns in isolated virtual aerodynamic environments to optimize chemical usage.",
+    delay: 0.4
   }
 ];
 
 export default function SystemMap() {
-  const [activeMission, setActiveMission] = useState(0);
-  const p = missions[activeMission];
+  const [activeIdx, setActiveIdx] = useState(0);
+  const p = projects[activeIdx];
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-6 py-12 flex flex-col items-center">
-      <div className="mb-12 text-center max-w-2xl">
-        <div className="inline-block px-3 py-1 rounded-full border border-[#FF6B6B]/30 bg-[#FF6B6B]/5 text-[#FF6B6B] text-xs font-mono font-bold mb-4 tracking-widest uppercase">
-          Lab Access Granted
+    <section id="projects" className="w-full max-w-7xl mx-auto px-6 py-24 order-4">
+      <div className="mb-16 text-center lg:text-left flex flex-col lg:flex-row items-end justify-between gap-6">
+        <div className="max-w-2xl">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="inline-block px-3 py-1 rounded-full border border-[#FF6B6B]/30 bg-[#FF6B6B]/5 text-[#FF6B6B] text-xs font-mono font-bold mb-6 tracking-widest uppercase"
+          >
+            Engineering Portfolio
+          </motion.div>
+          <h2 className="text-4xl md:text-6xl font-poppins font-bold text-[#E6EDF3] mb-6">
+            Project <span className="text-[#FF6B6B]">Missions</span>
+          </h2>
+          <p className="text-lg text-slate-400 font-inter leading-relaxed">
+            Detailed case studies of my conceptual and technical system designs ranging from automation to hardware robotics.
+          </p>
         </div>
-        <h2 className="text-3xl md:text-5xl font-poppins font-bold text-[#E6EDF3] mb-4">
-          Project Missions
-        </h2>
-        <p className="text-lg text-slate-400 font-inter leading-relaxed">
-          Explore my conceptual projects and research systems through this dashboard interface.
-        </p>
+        
+        <div className="flex items-center gap-2 text-xs font-mono text-slate-500 bg-[#0F172A] p-2 rounded-xl border border-slate-800">
+          <Info size={14} className="text-[#2DD4BF]" />
+          <span>Click missions to expand technical details</span>
+        </div>
       </div>
 
-      <div className="w-full bg-[#0B0F1A] rounded-3xl shadow-[0_0_30px_rgba(45,212,191,0.05)] border border-[#2DD4BF]/20 overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+      <div className="w-full bg-[#0B0F1A] rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] border border-slate-800 overflow-hidden flex flex-col lg:flex-row min-h-[600px]">
         
-        {/* Sidebar / Mission Index */}
-        <div className="w-full md:w-1/3 bg-[#0F172A] border-r border-[#2DD4BF]/20 p-6 flex flex-col gap-3">
-          <h3 className="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2 px-2">Active Missions</h3>
-          {missions.map((m, idx) => (
+        {/* Sidebar Selector */}
+        <div className="w-full lg:w-1/3 bg-[#0F172A] border-b lg:border-b-0 lg:border-r border-slate-800 p-6 space-y-3">
+          <h3 className="text-xs text-slate-500 font-bold uppercase tracking-[0.2em] mb-4 px-2">Mission Log</h3>
+          {projects.map((m, idx) => (
             <button
               key={m.id}
-              onClick={() => setActiveMission(idx)}
-              className={`flex flex-col text-left p-4 rounded-xl border transition-all duration-300 ${
-                activeMission === idx 
-                  ? "bg-[#2DD4BF]/10 border-[#2DD4BF] shadow-[0_0_15px_rgba(45,212,191,0.15)]" 
-                  : "bg-[#0B0F1A] border-slate-800 hover:border-[#8B5CF6]/50 hover:bg-[#8B5CF6]/5"
+              onClick={() => setActiveIdx(idx)}
+              className={`w-full flex flex-col text-left p-4 rounded-2xl border transition-all duration-300 ${
+                activeIdx === idx 
+                  ? "bg-[#FF6B6B]/10 border-[#FF6B6B]/50 shadow-[0_0_20px_rgba(255,107,107,0.1)]" 
+                  : "bg-transparent border-transparent hover:bg-slate-800/50 hover:border-slate-700"
               }`}
             >
-              <div className="flex items-center gap-2 mb-1">
-                <FileCode2 size={16} className={activeMission === idx ? "text-[#2DD4BF]" : "text-slate-500"} />
-                <span className={`font-mono text-xs tracking-wider ${activeMission === idx ? "text-[#2DD4BF] font-semibold" : "text-slate-500"}`}>MISSION {m.id}</span>
+              <div className="flex items-center gap-2 mb-2">
+                <div className={`w-2 h-2 rounded-full ${activeIdx === idx ? "bg-[#FF6B6B]" : "bg-slate-700"}`} />
+                <span className={`font-mono text-[10px] tracking-[0.2em] uppercase ${activeIdx === idx ? "text-[#FF6B6B]" : "text-slate-500"}`}>
+                  PROJECT {m.id}
+                </span>
               </div>
-              <span className={`font-poppins font-semibold text-sm leading-tight ${activeMission === idx ? "text-[#E6EDF3]" : "text-slate-400"}`}>{m.title}</span>
+              <span className={`font-poppins font-bold text-base leading-tight ${activeIdx === idx ? "text-[#E6EDF3]" : "text-slate-500"}`}>
+                {m.title}
+              </span>
             </button>
           ))}
         </div>
 
-        {/* Main Dashboard Panel */}
+        {/* Dashboard Content */}
         <div className="flex-1 flex flex-col bg-[#0B0F1A]">
-          <div className="w-full border-b border-[#2DD4BF]/20 p-6 bg-[#0B0F1A] flex items-center justify-between sticky top-0 z-10">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-[#2DD4BF]/10 rounded-lg text-[#2DD4BF] border border-[#2DD4BF]/30">
-                <Target size={20} />
+          <div className="w-full border-b border-slate-800 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-[#FF6B6B]/10 rounded-2xl text-[#FF6B6B] border border-[#FF6B6B]/20">
+                <Target size={24} />
               </div>
               <div>
-                <h3 className="font-poppins font-bold text-xl text-[#E6EDF3]">{p.title}</h3>
-                <span className="font-mono text-xs text-[#2DD4BF] uppercase tracking-wider">Mission Details</span>
+                <h3 className="font-poppins font-bold text-2xl text-[#E6EDF3] leading-none mb-1">{p.title}</h3>
+                <span className="font-mono text-xs text-slate-500 tracking-wider">SECURE_LEVEL: HIGH_CLEARANCE</span>
               </div>
             </div>
-            <span className="text-[10px] uppercase text-[#2DD4BF] font-bold bg-[#2DD4BF]/10 px-3 py-1 rounded-full border border-[#2DD4BF]/30">System Logged</span>
+            <div className="px-4 py-1.5 rounded-full border border-[#2DD4BF]/20 bg-[#2DD4BF]/5 text-[#2DD4BF] text-[10px] font-bold font-mono tracking-widest uppercase">
+              Operational Concept
+            </div>
           </div>
 
           <AnimatePresence mode="wait">
             <motion.div 
               key={p.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="p-8 overflow-y-auto flex-1 h-full"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4 }}
+              className="p-8 lg:p-12 overflow-y-auto flex-1 h-full max-h-[700px] custom-scrollbar"
             >
-              
-              <div className="mb-8">
-                <h4 className="flex items-center gap-2 text-sm font-semibold text-[#8B5CF6] uppercase tracking-wider mb-2">
-                  <Lightbulb size={16} className="text-[#8B5CF6]"/> Concept Idea
-                </h4>
-                <p className="text-[#E6EDF3] text-lg leading-relaxed">{p.idea}</p>
+              {/* Concept Section */}
+              <div className="mb-12">
+                <div className="flex items-center gap-3 mb-4">
+                  <Lightbulb size={20} className="text-[#8B5CF6]"/>
+                  <h4 className="text-sm font-bold text-[#8B5CF6] uppercase tracking-[0.2em]">Concept Idea</h4>
+                </div>
+                <p className="text-[#E6EDF3] text-xl font-medium leading-relaxed">
+                  {p.concept}
+                </p>
               </div>
 
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                
-                {/* Column 1 */}
-                <div className="space-y-8">
-                  <div className="bg-[#0F172A] rounded-2xl p-6 border border-slate-800">
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#FF6B6B] uppercase tracking-wider mb-3">
-                      <Target size={14} className="text-[#FF6B6B]"/> Problem
-                    </h4>
-                    <p className="text-slate-400 text-sm leading-relaxed">{p.problem}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                {/* Problem & Workflow */}
+                <div className="space-y-10">
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <Target size={16} className="text-[#FF6B6B]"/>
+                      <h4 className="text-xs font-bold text-[#FF6B6B] uppercase tracking-[0.2em]">Problem Statement</h4>
+                    </div>
+                    <p className="text-slate-400 text-sm leading-relaxed bg-[#0F172A] p-4 rounded-xl border border-slate-800 italic">
+                      &quot;{p.problem}&quot;
+                    </p>
                   </div>
 
-                  <div className="bg-[#0F172A] rounded-2xl p-6 border border-slate-800 shadow-sm">
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#2DD4BF] uppercase tracking-wider mb-4">
-                      <Workflow size={14} className="text-[#2DD4BF]"/> System Workflow
-                    </h4>
-                    <div className="p-4 bg-[#0B0F1A] rounded-xl font-mono text-xs text-[#2DD4BF] font-medium leading-relaxed border border-[#2DD4BF]/20 flex items-center justify-center text-center">
-                      {p.arch}
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <Workflow size={16} className="text-[#2DD4BF]"/>
+                      <h4 className="text-xs font-bold text-[#2DD4BF] uppercase tracking-[0.2em]">System Workflow</h4>
+                    </div>
+                    <div className="p-4 bg-[#0F172A] rounded-xl font-mono text-xs text-[#2DD4BF] border border-[#2DD4BF]/20 text-center leading-loose">
+                      {p.workflow}
                     </div>
                   </div>
                 </div>
 
-                {/* Column 2 */}
-                <div className="space-y-8">
+                {/* Tech & Future */}
+                <div className="space-y-10">
                   <div>
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#E6EDF3] uppercase tracking-wider mb-3">
-                      <Cpu size={14} className="text-[#8B5CF6]"/> Technologies
-                    </h4>
+                    <div className="flex items-center gap-3 mb-4">
+                      <Cpu size={16} className="text-[#8B5CF6]"/>
+                      <h4 className="text-xs font-bold text-[#8B5CF6] uppercase tracking-[0.2em]">Possible Technologies</h4>
+                    </div>
                     <div className="flex flex-wrap gap-2">
                       {p.tech.map(t => (
-                         <span key={t} className="text-xs px-3 py-1.5 rounded-lg bg-[#8B5CF6]/10 text-[#8B5CF6] border border-[#8B5CF6]/30 font-medium">
+                        <span key={t} className="text-[10px] px-3 py-1.5 rounded-lg bg-[#0F172A] text-[#E6EDF3] border border-slate-700 font-mono font-bold">
                           {t}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-[#0F172A] rounded-2xl p-6 border border-slate-800">
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#2DD4BF] uppercase tracking-wider mb-3">
-                      <Wrench size={14} className="text-[#2DD4BF]"/> Future Implementation
-                    </h4>
-                    <p className="text-slate-400 text-sm leading-relaxed">{p.future}</p>
-                  </div>
-
-                  <div className="bg-[#8B5CF6]/5 rounded-2xl p-6 border border-[#8B5CF6]/20 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#8B5CF6]/10 rounded-full blur-xl" />
-                    <h4 className="flex items-center gap-2 text-xs font-bold text-[#8B5CF6] uppercase tracking-wider mb-3">
-                      <Lightbulb size={14} className="text-[#8B5CF6]"/> Learning Insights
-                    </h4>
-                    <p className="text-[#E6EDF3]/80 text-sm leading-relaxed italic">
-                      &quot;{p.insight}&quot;
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <Wrench size={16} className="text-[#E6EDF3]"/>
+                      <h4 className="text-xs font-bold text-[#E6EDF3] uppercase tracking-[0.2em]">Future implementation plan</h4>
+                    </div>
+                    <p className="text-slate-400 text-sm leading-relaxed border-l-2 border-[#2DD4BF] pl-4">
+                      {p.future}
                     </p>
                   </div>
                 </div>
-
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
