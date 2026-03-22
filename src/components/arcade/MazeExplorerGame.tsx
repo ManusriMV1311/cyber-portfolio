@@ -88,7 +88,7 @@ export default function MazeExplorerGame({ onComplete }: MazeExplorerProps) {
     2: "bg-[#2DD4BF]/15 border border-[#2DD4BF]/50",
   };
 
-  const DPadBtn = ({ dr, dc, icon: Icon, label }: { dr: number; dc: number; icon: React.ElementType; label: string }) => (
+  const DPadBtn = ({ dr, dc, icon: Icon, label }: { dr: number; dc: number; icon: any; label: string }) => (
     <button
       onPointerDown={(e) => { e.preventDefault(); move(dr, dc); }}
       aria-label={label}
