@@ -1,83 +1,83 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldAlert, Bot, Cpu, Zap } from "lucide-react";
+import { ShieldCheck, Cpu, Bot, Zap, User } from "lucide-react";
 
 export default function IdentityCore() {
   const interests = [
     {
-      icon: <ShieldAlert className="w-8 h-8 text-[#FF6B6B]" />,
+      icon: <ShieldCheck className="w-8 h-8 text-[#00D4FF]" />,
       title: "Cybersecurity",
-      desc: "Deeply interested in securing digital landscapes through threat intelligence and network defense systems.",
+      desc: "Specializing in securing digital landscapes and threat intelligence workflows.",
+      delay: 0.1
+    },
+    {
+      icon: <Cpu className="w-8 h-8 text-[#8B5CF6]" />,
+      title: "AI & Learning",
+      desc: "Exploring machine learning to optimize decision-making and pattern recognition.",
       delay: 0.2
     },
     {
-      icon: <Cpu className="w-8 h-8 text-[#2DD4BF]" />,
-      title: "Artificial Intelligence",
-      desc: "Exploring how machine learning and neural networks can optimize complex decision-making processes.",
+      icon: <Bot className="w-8 h-8 text-[#F97316]" />,
+      title: "Robotics",
+      desc: "Conceptualizing and building autonomous hardware for physical-world challenges.",
       delay: 0.3
     },
     {
-      icon: <Bot className="w-8 h-8 text-[#8B5CF6]" />,
-      title: "Robotics",
-      desc: "Building and conceptualizing autonomous hardware that bridges the gap between software and the physical world.",
-      delay: 0.4
-    },
-    {
-      icon: <Zap className="w-8 h-8 text-[#E6EDF3]" />,
+      icon: <Zap className="w-8 h-8 text-[#E5E7EB]" />,
       title: "Automation",
-      desc: "Passionate about streamlining repetitive tasks through intelligent scripts and integrated IoT systems.",
-      delay: 0.5
+      desc: "Streamlining complex processes through resilient scripts and IoT concepts.",
+      delay: 0.4
     }
   ];
 
   return (
     <section id="about" className="w-full max-w-6xl mx-auto px-6 py-24 flex flex-col items-center">
-      <div className="mb-16 text-center max-w-3xl">
+      <div className="mb-20 text-center max-w-3xl">
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="inline-block px-3 py-1 rounded-full border border-[#2DD4BF]/30 bg-[#2DD4BF]/5 text-[#2DD4BF] text-xs font-mono font-bold mb-6 tracking-widest uppercase"
+          className="inline-block px-3 py-1 rounded-full border border-[#00D4FF]/30 bg-[#00D4FF]/5 text-[#00D4FF] text-xs font-mono font-bold mb-6 tracking-widest uppercase"
         >
-          Developer Story
+          Identity_Module
         </motion.div>
         
-        <h2 className="text-4xl md:text-6xl font-poppins font-bold text-[#E6EDF3] mb-8">
-          The <span className="text-[#2DD4BF]">Human</span> Behind the Logic
+        <h2 className="text-4xl md:text-6xl font-poppins font-black text-[#E5E7EB] mb-8 uppercase tracking-tighter">
+          The <span className="text-[#00D4FF]">Developer</span> Story
         </h2>
         
         <div className="text-lg md:text-xl text-slate-400 font-inter leading-relaxed space-y-6 text-left md:text-center">
           <p>
-            I am a Computer Science Engineering student with a passion for building systems that are not only intelligent but also secure and autonomous. My journey began with a curiosity about how devices communicate, which quickly evolved into a dedicated pursuit of **Cybersecurity**, **AI**, and **Robotics**.
+            I am a <span className="text-[#E5E7EB] font-bold">Computer Science Engineering</span> student specializing in <span className="text-[#00D4FF]">Cybersecurity</span> at my core. My work is driven by curiosity and a focus on solving real-world problems using the latest technology architectures.
           </p>
           <p>
-            Whether it&apos;s coding autonomous safety robots or designing automated systems for critical infrastructure, my goal is to create technology that makes the world more efficient and safer. I believe the intersection of these fields is where the most impactful innovation happens.
+            I specialize in the intersection of <span className="text-slate-200">secure systems</span>, <span className="text-slate-200">artificial intelligence</span>, and <span className="text-slate-200">robotics</span>. My goal is to build automated environments that are not only efficient but fundamentally resilient against modern threats.
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full mt-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full mt-8">
         {interests.map((interest, idx) => (
           <motion.div
             key={idx}
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5, delay: interest.delay }}
-            className="bg-[#0B0F1A] rounded-2xl p-8 border border-slate-800 shadow-sm hover:border-[#2DD4BF]/50 hover:shadow-[0_0_20px_rgba(45,212,191,0.15)] transition-all duration-300 flex flex-col items-start group relative overflow-hidden h-full"
+            className="bg-[#111827] rounded-3xl p-8 border border-slate-800 hover:border-[#00D4FF]/50 hover:shadow-[0_0_30px_rgba(0,212,255,0.1)] transition-all duration-300 flex flex-col items-center text-center group relative overflow-hidden h-full"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#2DD4BF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#00D4FF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
-            <div className="p-4 bg-[#0F172A] rounded-2xl border border-slate-800 mb-6 group-hover:bg-[#2DD4BF]/10 transition-colors">
+            <div className="p-5 bg-[#0A0F1F] rounded-2xl border border-slate-800 mb-8 group-hover:scale-110 transition-transform">
               {interest.icon}
             </div>
             
-            <h3 className="text-xl font-semibold font-poppins text-[#E6EDF3] mb-3 group-hover:text-[#2DD4BF] transition-colors">
+            <h3 className="text-xl font-bold font-poppins text-[#E5E7EB] mb-4 uppercase tracking-tight">
               {interest.title}
             </h3>
             
-            <p className="text-slate-400 font-inter leading-relaxed text-sm">
+            <p className="text-slate-500 font-inter leading-relaxed text-sm group-hover:text-slate-400 transition-colors">
               {interest.desc}
             </p>
           </motion.div>

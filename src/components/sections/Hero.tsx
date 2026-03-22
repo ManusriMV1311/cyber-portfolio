@@ -7,62 +7,77 @@ export default function Hero() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: "smooth"
+      });
     }
   };
 
   return (
-    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#2DD4BF]/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#8B5CF6]/5 blur-[120px] rounded-full pointer-events-none" />
+    <section className="relative w-full min-h-[95vh] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+      {/* Background Aurora Glows */}
+      <div className="absolute top-1/4 -left-1/4 w-[500px] h-[500px] bg-[#00D4FF]/10 blur-[150px] rounded-full pointer-events-none animate-pulse" />
+      <div className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-[#8B5CF6]/10 blur-[150px] rounded-full pointer-events-none animate-pulse" />
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="relative z-10 max-w-4xl"
+        className="relative z-10 max-w-5xl"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="inline-block px-4 py-1.5 rounded-full border border-[#2DD4BF]/20 bg-[#2DD4BF]/5 text-[#2DD4BF] text-xs font-mono font-bold mb-8 tracking-[0.2em] uppercase"
+          className="inline-block px-4 py-1.5 rounded-full border border-[#00D4FF]/20 bg-[#00D4FF]/5 text-[#00D4FF] text-xs font-mono font-bold mb-8 tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(0,212,255,0.1)]"
         >
-          Systems & Security Portfolio
+          Securing the Future of Automation
         </motion.div>
 
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-poppins font-bold text-[#E6EDF3] mb-6 tracking-tight">
-          Manusri <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2DD4BF] to-[#8B5CF6]">M V</span>
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-poppins font-black text-[#E5E7EB] mb-6 tracking-tighter">
+          Manusri <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D4FF] via-[#8B5CF6] to-[#F97316]">M V</span>
         </h1>
 
-        <p className="text-xl md:text-2xl text-slate-400 font-inter max-w-2xl mx-auto mb-10 leading-relaxed">
-          Cybersecurity Student <span className="text-slate-600 mx-2">|</span> 
-          Exploring <span className="text-[#2DD4BF]">AI</span>, 
-          <span className="text-[#8B5CF6]"> Robotics</span> and 
-          <span className="text-[#FF6B6B]"> Automation</span> Systems
+        <div className="flex flex-col items-center gap-2 mb-10">
+          <p className="text-2xl md:text-3xl text-slate-300 font-poppins font-bold">
+            Cybersecurity Engineering Student
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-slate-500 font-inter text-lg">
+            <span>Exploring <span className="text-[#00D4FF]">AI</span></span>
+            <span className="hidden md:inline">•</span>
+            <span><span className="text-[#8B5CF6]">Automation</span></span>
+            <span className="hidden md:inline">•</span>
+            <span>Secure <span className="text-[#F97316]">Technology Systems</span></span>
+          </div>
+        </div>
+
+        <p className="text-lg md:text-xl text-slate-400 font-inter max-w-2xl mx-auto mb-12 leading-relaxed">
+          Building ideas that combine <span className="text-[#E5E7EB] font-medium italic">cybersecurity thinking</span> with <span className="text-[#E5E7EB] font-medium">automation</span> and innovative technology concepts.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
           <button
             onClick={() => scrollToSection("projects")}
-            className="group relative px-8 py-4 bg-[#2DD4BF] text-[#0B0F1A] rounded-xl font-bold font-poppins transition-all hover:scale-105 active:scale-95 flex items-center gap-2 overflow-hidden shadow-[0_0_20px_rgba(45,212,191,0.3)]"
+            className="group relative px-10 py-5 bg-gradient-to-r from-[#00D4FF] to-[#8B5CF6] text-[#0A0F1F] rounded-2xl font-black font-poppins transition-all hover:scale-105 active:scale-95 flex items-center gap-3 shadow-[0_0_30px_rgba(0,212,255,0.3)] hover:shadow-[0_0_40px_rgba(139,92,246,0.4)]"
           >
             View Projects
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>
 
           <button
             onClick={() => scrollToSection("arcade")}
-            className="group px-8 py-4 bg-transparent border border-slate-700 text-[#E6EDF3] rounded-xl font-bold font-poppins transition-all hover:border-[#8B5CF6] hover:bg-[#8B5CF6]/5 flex items-center gap-2"
+            className="group px-10 py-5 bg-[#111827] border border-slate-800 text-[#E5E7EB] rounded-2xl font-bold font-poppins transition-all hover:border-[#00D4FF]/50 hover:bg-[#111827]/80 flex items-center gap-3"
           >
-            <Play size={18} className="text-[#8B5CF6] fill-[#8B5CF6]" />
-            Play Tech Arcade
+            <Play size={20} className="text-[#00D4FF] fill-[#00D4FF]" />
+            Explore Tech Arcade
           </button>
 
           <button
             onClick={() => scrollToSection("contact")}
-            className="group px-8 py-4 text-slate-400 hover:text-[#E6EDF3] transition-colors font-semibold font-poppins flex items-center gap-2"
+            className="group px-6 py-4 text-slate-500 hover:text-[#00D4FF] transition-colors font-bold font-mono text-sm tracking-widest uppercase flex items-center gap-2"
           >
             <Mail size={18} />
             Contact
@@ -70,21 +85,10 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Scroll Down Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:block"
-      >
-        <div className="w-6 h-10 border-2 border-slate-800 rounded-full flex justify-center p-1">
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-1 h-2 bg-[#2DD4BF] rounded-full"
-          />
-        </div>
-      </motion.div>
+      {/* Grid Pattern in bottom corner */}
+      <div className="absolute bottom-0 right-0 w-96 h-96 opacity-10 pointer-events-none">
+        <div className="w-full h-full bg-[radial-gradient(#00D4FF_1px,transparent_1px)] [background-size:20px_20px]" />
+      </div>
     </section>
   );
 }

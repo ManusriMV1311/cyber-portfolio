@@ -41,7 +41,7 @@ export default function AIAssistantWidget() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#bc13fe] border-2 border-[#00f0ff] flex items-center justify-center text-white box-glow"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#8B5CF6] border-2 border-[#00D4FF] flex items-center justify-center text-white shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all"
       >
         <Cpu size={24} />
       </motion.button>
@@ -53,27 +53,30 @@ export default function AIAssistantWidget() {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            className="fixed bottom-24 right-6 z-50 w-80 h-96 glass-panel border border-[#bc13fe]/50 rounded-xl flex flex-col shadow-[0_0_30px_rgba(188,19,254,0.3)] overflow-hidden"
+            className="fixed bottom-24 right-6 z-50 w-80 h-96 bg-[#0A0F1F] border border-[#8B5CF6]/50 rounded-2xl flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-[#bc13fe]/20 border-b border-[#bc13fe]/30 p-3 flex justify-between items-center">
-              <div className="flex items-center gap-2 text-white">
-                <Cpu size={18} className="text-[#00f0ff]" />
-                <span className="font-orbitron font-bold text-sm tracking-wide">AI.GUIDE.V1</span>
+            <div className="bg-[#111827] border-b border-white/5 p-4 flex justify-between items-center">
+              <div className="flex items-center gap-2.5 text-[#E5E7EB]">
+                <Cpu size={18} className="text-[#00D4FF]" />
+                <span className="font-poppins font-black text-[10px] tracking-[0.2em] uppercase">AI.GUIDE.V1</span>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white transition-colors">
+              <button 
+                onClick={() => setIsOpen(false)} 
+                className="text-slate-500 hover:text-white transition-colors p-1"
+              >
                 <X size={18} />
               </button>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={`max-w-[85%] p-3 rounded-lg text-sm ${
+                  <div className={`max-w-[85%] p-4 rounded-2xl text-[13px] leading-relaxed font-inter ${
                     msg.sender === "user" 
-                      ? "bg-[#bc13fe]/20 border border-[#bc13fe]/50 text-white rounded-br-none" 
-                      : "bg-[#00f0ff]/10 border border-[#00f0ff]/30 text-gray-200 rounded-bl-none"
+                      ? "bg-[#8B5CF6] text-white rounded-br-none" 
+                      : "bg-[#111827] border border-white/5 text-[#E5E7EB] rounded-bl-none shadow-sm"
                   }`}>
                     {msg.text}
                   </div>
@@ -82,15 +85,15 @@ export default function AIAssistantWidget() {
             </div>
 
             {/* Input Form */}
-            <form onSubmit={handleSend} className="p-3 bg-[#0a0a1a] border-t border-[#bc13fe]/30 flex gap-2">
+            <form onSubmit={handleSend} className="p-4 bg-[#111827] border-t border-white/5 flex gap-3">
               <input 
                 type="text" 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask me anything..."
-                className="flex-1 bg-transparent border-none outline-none text-sm text-white focus:ring-0 placeholder-gray-500"
+                placeholder="Initialize inquiry..."
+                className="flex-1 bg-transparent border-none outline-none text-xs text-[#E5E7EB] focus:ring-0 placeholder-slate-600 font-mono"
               />
-              <button type="submit" className="text-[#00f0ff] hover:text-[#bc13fe] transition-colors p-1">
+              <button type="submit" className="text-[#00D4FF] hover:scale-110 active:scale-95 transition-all p-1">
                 <MessageSquare size={18} />
               </button>
             </form>

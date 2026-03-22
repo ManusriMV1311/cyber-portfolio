@@ -1,126 +1,128 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FlaskConical, Binary, Fingerprint, ShieldAlert, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { Terminal, Shield, Binoculars, Zap, Search, Activity, Cpu, ArrowRight } from "lucide-react";
 
-const experiments = [
+/**
+ * Technical experiments and learning topics following Aurora Fusion specs.
+ */
+const EXPERIMENTS = [
   {
-    id: "exp-01",
-    title: "Security Logic Demo",
-    type: "Interactive Tool",
-    icon: <Fingerprint size={24} className="text-[#FF6B6B]" />,
-    desc: "A demonstration of cryptographic logic patterns and digital signature verification processes.",
-    color: "#FF6B6B"
+    title: "SOC Workflows",
+    category: "Security Operations",
+    icon: <Shield className="text-[#00D4FF]" />,
+    desc: "Developing conceptual frameworks for incident response, alert triage, and security monitoring in enterprise environments.",
+    tags: ["SIEM Concepts", "Incident Response", "Threat Hunting"],
+    color: "#00D4FF"
   },
   {
-    id: "exp-02",
-    title: "SOC Basic Monitor",
-    type: "Automation Study",
-    icon: <Binary size={24} className="text-[#2DD4BF]" />,
-    desc: "A conceptual dashboard showing real-time log analysis and threat detection heuristics.",
-    color: "#2DD4BF"
-  },
-  {
-    id: "exp-03",
-    title: "Vulnerability Scanner",
-    type: "Technical Exploration",
-    icon: <ShieldAlert size={24} className="text-[#8B5CF6]" />,
-    desc: "Exploring automated identification of common misconfigurations in specialized edge networks.",
+    title: "CTF Challenges",
+    category: "Vulnerability Research",
+    icon: <Terminal className="text-[#8B5CF6]" />,
+    desc: "Continuous practice in web exploitation, reverse engineering, and cryptography through competitive Capture The Flag events.",
+    tags: ["Pwn", "Web Security", "Reverse Engineering"],
     color: "#8B5CF6"
+  },
+  {
+    title: "Network Auditing",
+    category: "Infrastructure Security",
+    icon: <Search className="text-[#F97316]" />,
+    desc: "Researching methodologies for detecting unauthorized devices and assessing protocol vulnerabilities in local networks.",
+    tags: ["Nmap", "Wireshark", "Packet Analysis"],
+    color: "#F97316"
+  },
+  {
+    title: "AI Research",
+    category: "Technical Discovery",
+    icon: <Cpu className="text-[#E5E7EB]" />,
+    desc: "Leveraging large language models and neural networks to accelerate technical discovery and automate pattern recognition.",
+    tags: ["LLMs", "Data Analysis", "Automation"],
+    color: "#E5E7EB"
   }
 ];
 
 export default function TechExperiments() {
-  const [hovered, setHovered] = useState<string | null>(null);
-
   return (
-    <section id="experiments" className="w-full max-w-6xl mx-auto px-6 py-24">
-      <div className="mb-16 text-center">
+    <section id="experiments" className="w-full max-w-7xl mx-auto px-6 py-24">
+      <div className="mb-20 text-center">
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="inline-block px-3 py-1 rounded-full border border-[#2DD4BF]/30 bg-[#2DD4BF]/5 text-[#2DD4BF] text-xs font-mono font-bold mb-6 tracking-widest uppercase"
+          className="inline-block px-3 py-1 rounded-full border border-[#F97316]/30 bg-[#F97316]/5 text-[#F97316] text-xs font-mono font-bold mb-6 tracking-widest uppercase"
         >
-          RnD Laboratory
+          Research_Lab
         </motion.div>
-        <h2 className="text-4xl md:text-6xl font-poppins font-bold text-[#E6EDF3] mb-6">
-          Technical <span className="text-[#2DD4BF]">Experiments</span>
+        <h2 className="text-4xl md:text-6xl font-poppins font-black text-[#E5E7EB] mb-6 uppercase tracking-tighter">
+          Learning & <span className="text-[#F97316]">Experiments</span>
         </h2>
         <p className="text-lg text-slate-400 font-inter max-w-2xl mx-auto">
-          Experimental prototypes and technical explorations focused on cybersecurity, automation, and system integrity.
+          Active technical research areas and ongoing development labs focusing on security and automation.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {experiments.map((exp, idx) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {EXPERIMENTS.map((exp, idx) => (
           <motion.div
-            key={exp.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            key={idx}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.1 }}
-            onMouseEnter={() => setHovered(exp.id)}
-            onMouseLeave={() => setHovered(null)}
-            className="group relative bg-[#0B0F1A] border border-slate-800 rounded-3xl p-8 hover:border-[#2DD4BF]/30 transition-all duration-500 overflow-hidden flex flex-col h-full"
+            transition={{ delay: idx * 0.1 }}
+            className="group relative bg-[#111827] border border-slate-800 rounded-[2rem] p-8 lg:p-10 hover:border-[#F97316]/50 transition-all duration-500 overflow-hidden flex flex-col h-full"
           >
-            {/* Visual Background Decoration */}
+            {/* Background Glow */}
             <div 
-              className={`absolute top-0 right-0 w-32 h-32 blur-[80px] opacity-10 transition-opacity duration-500 pointer-events-none ${hovered === exp.id ? "opacity-30" : ""}`}
+              className="absolute -top-10 -right-10 w-40 h-40 blur-[80px] opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none"
               style={{ backgroundColor: exp.color }}
             />
-            
-            <div className="relative z-10 flex flex-col h-full">
-              <div className="flex items-center justify-between mb-8">
-                <div className="p-3 bg-[#0F172A] rounded-2xl border border-slate-800 group-hover:bg-slate-800 transition-colors">
-                  {exp.icon}
-                </div>
-                <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-slate-500 uppercase">
-                  {exp.type}
-                </span>
+
+            <div className="flex flex-col sm:flex-row gap-8 items-start relative z-10 flex-1">
+              <div className="p-5 bg-[#0A0F1F] rounded-2xl border border-slate-800 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                {exp.icon}
               </div>
-
-              <h3 className="text-xl font-bold font-poppins text-[#E6EDF3] mb-4 group-hover:text-[#2DD4BF] transition-colors">
-                {exp.title}
-              </h3>
               
-              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-1">
-                {exp.desc}
-              </p>
+              <div className="flex-1">
+                <div className="flex flex-wrap items-center gap-3 mb-4">
+                  <span className="text-[10px] font-mono font-bold text-[#F97316] uppercase tracking-widest">{exp.category}</span>
+                  <div className="w-1 h-1 rounded-full bg-slate-700" />
+                  <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-widest italic tracking-tighter">Module_{idx + 1}</span>
+                </div>
+                
+                <h3 className="text-2xl font-black font-poppins text-[#E5E7EB] mb-4 group-hover:text-[#F97316] transition-colors tracking-tight">{exp.title}</h3>
+                
+                <p className="text-slate-400 font-inter leading-relaxed mb-8 text-sm">
+                  {exp.desc}
+                </p>
 
-              <button className="flex items-center gap-2 text-xs font-bold font-mono text-[#2DD4BF] uppercase tracking-widest group/btn">
-                Launch Experiment
-                <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {exp.tags.map(tag => (
+                    <span 
+                      key={tag}
+                      className="px-2.5 py-1 rounded-lg bg-[#0A0F1F] border border-slate-800 text-[9px] font-mono text-slate-500"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-10 pt-6 border-t border-slate-800/50 flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-[#F97316] transition-colors" />
+                <span className="text-[9px] font-mono font-bold text-slate-600 uppercase tracking-widest group-hover:text-slate-500 transition-colors">Lab_Access: Open</span>
+              </div>
+              <button className="flex items-center gap-2 text-[10px] font-black font-poppins text-[#F97316] hover:translate-x-1 transition-transform uppercase tracking-widest group/btn">
+                Launch Module <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
               </button>
             </div>
 
             {/* Subtle Grid Pattern Overlay */}
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
           </motion.div>
         ))}
       </div>
-
-      {/* Lab Banner Component */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="mt-16 w-full p-8 rounded-3xl bg-gradient-to-r from-[#0F172A] to-[#0B0F1A] border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6"
-      >
-        <div className="flex items-center gap-6">
-          <div className="p-4 bg-[#2DD4BF]/10 rounded-full text-[#2DD4BF] animate-pulse">
-            <FlaskConical size={32} />
-          </div>
-          <div>
-            <h4 className="text-[#E6EDF3] font-bold font-poppins text-lg leading-none mb-2">Integrated Research Workflows</h4>
-            <p className="text-slate-500 text-sm font-inter">Explore my open-source security tools on GitHub</p>
-          </div>
-        </div>
-        <button className="px-6 py-3 bg-[#0B0F1A] border border-slate-700 rounded-xl text-[#2DD4BF] font-bold font-mono text-xs uppercase tracking-widest hover:border-[#2DD4BF] hover:bg-[#2DD4BF]/5 transition-all">
-          Browse Repository
-        </button>
-      </motion.div>
     </section>
   );
 }
